@@ -4,6 +4,7 @@ detached worker process."""
 
 import json
 import os
+import re
 import time
 import unittest
 from datetime import datetime, timedelta
@@ -75,19 +76,24 @@ class Worker(unittest.TestCase):
         self.assertEqual(chats(self.env)[0]["options"]["num_predict"] > 16000, True)  # bigger night budget
 
     def test_deadline_keeps_finished_parts_and_the_job_can_continue(self):
-        self.realtime(decode_tps=2000)       # ~0.5 s per part
+        self.realtime(decode_tps=2000)       # about a second per part
         out = self.translate_job(chunks=4, option="fast_now", max_minutes=0.025, wait_s=20)
         self.assertEqual(out["status"], "partial", out)
-        self.assertIn("returned the first", out["error"])
         self.assertIn("resumable", out)
-        first = len(chats(self.env))
-        self.assertTrue(1 <= first < 4, first)
+        m = re.search(r"returned the first (\d+) of 4 parts", out["error"])
+        self.assertIsNotNone(m, out["error"])
+        kept = int(m.group(1))
+        self.assertTrue(1 <= kept < 4, kept)
         text = open(out["result"]["saved_to"], encoding="utf-8").read()
-        self.assertIn("Paragraph", text)
+        self.assertEqual(text.count("Paragraph 0:"), kept)   # the saved text holds just the finished parts
+        first = len(chats(self.env))
+        # A part still running when the budget runs out is stopped, then redone when the job
+        # continues. Whether one is cut off like that depends on the machine's speed.
+        self.assertIn(first - kept, (0, 1), (first, kept))
         again = self.svc.local_run(job_id=out["job_id"], when="now", user_approved=True)
         done = self.svc.local_result(again["job_id"], wait_s=30)
         self.assertEqual(done["status"], "done", done)
-        self.assertEqual(len(chats(self.env)), 4)            # finished parts were not redone
+        self.assertEqual(len(chats(self.env)) - first, 4 - kept)   # finished parts were not redone
         self.assertEqual(open(done["result"]["saved_to"], encoding="utf-8").read().count("Paragraph"), 4)
 
     def test_a_now_job_overtakes_an_overnight_job_between_parts(self):
