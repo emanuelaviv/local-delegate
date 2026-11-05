@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+
+# Never commit a data folder or anything a job produced
+# (the real one lives in %LOCALAPPDATA%\local-delegate, outside the repository)
+local-delegate-data/
+outbox/
+*.jsonl
+profile.json
+worker.json
+spawn.json
+worker.lock
+*.log
+
+# Operating-system files
+.DS_Store
+Thumbs.db
+desktop.ini

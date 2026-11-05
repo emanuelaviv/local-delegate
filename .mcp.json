@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "local-delegate": {
+      "command": "py",
+      "args": ["-3", "-E", "-X", "utf8", "${CLAUDE_PLUGIN_ROOT}/server/ld.py", "serve"]
+    }
+  }
+}

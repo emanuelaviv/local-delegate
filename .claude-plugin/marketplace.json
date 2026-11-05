@@ -1,0 +1,14 @@
+{
+  "name": "local-delegate",
+  "description": "Local Delegate: hand routine work to a local Ollama model on your own computer, strictly local, with your OK before every run.",
+  "owner": {
+    "name": "Aviv Emanuel"
+  },
+  "plugins": [
+    {
+      "name": "local-delegate",
+      "source": "./",
+      "description": "Hand routine reading, extraction and first drafts to a local Ollama model on your own Windows computer, with options, time and token estimates, and your OK before every run."
+    }
+  ]
+}
