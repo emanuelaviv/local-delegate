@@ -1,0 +1,6 @@
+{
+  "_about": "Defaults for a new install, merged under %LOCALAPPDATA%\\local-delegate\\config.json (which wins). The connector reads files only inside allowed_roots, and never the secret stores in deny_globs.",
+  "allowed_roots": ["~"],
+  "protected_paths": [],
+  "areas": {}
+}
