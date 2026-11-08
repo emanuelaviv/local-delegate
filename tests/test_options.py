@@ -3,7 +3,7 @@
 import time
 import unittest
 
-from helpers import Env, fake_profile, set_config
+from helpers import Env, fake_profile, future_night_window, set_config
 from local_delegate import logbook, server
 from test_e2e import big_report
 
@@ -13,6 +13,7 @@ class Options(unittest.TestCase):
         self.env = Env()
         fake_profile(self.env)          # fast reading, slow writing, like the reference machine
         self.svc = server.Service()
+        set_config(self.env, night_window=future_night_window())   # results don't depend on the hour
         self.report = self.env.write("report.md", big_report())
 
     def tearDown(self):

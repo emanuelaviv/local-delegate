@@ -9,7 +9,7 @@ import time
 import unittest
 from datetime import datetime, timedelta
 
-from helpers import Env, fake_profile, set_config
+from helpers import Env, fake_profile, future_night_window, set_config
 from local_delegate import jobs, server
 
 
@@ -126,6 +126,7 @@ class Worker(unittest.TestCase):
         self.assertEqual(done["status"], "done", done)
 
     def test_cancel_a_scheduled_job(self):
+        set_config(self.env, night_window=future_night_window())   # "tonight" is still ahead at any hour
         est = self.svc.local_estimate("freeform", {"instruction": "say hi", "max_words": 20})
         out = self.svc.local_run(est["estimate_id"], option="fast_tonight", user_approved=True)
         self.assertIn(out["status"], ("scheduled", "queued"))

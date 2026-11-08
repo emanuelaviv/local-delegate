@@ -10,6 +10,8 @@
 - The skill names where the connector runs: Claude Code or a Cowork session on your Windows
   computer, not chat on the web or in the mobile apps.
 - Python 3.11 or newer, since 3.9 and 3.10 are past end of life. Tests run on 3.11 to 3.14.
+- Three tests no longer depend on the time of day. They failed in the hour and a half before the
+  night window closed, or just after it opened.
 
 ## 0.3.0 (2026-10-24): first public release
 

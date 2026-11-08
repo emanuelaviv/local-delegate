@@ -165,3 +165,11 @@ def set_config(env: "Env", **kv) -> None:
     cfg.update(kv)
     p.write_text(json.dumps(cfg))
     config.load(refresh=True)
+
+
+def future_night_window(hours_ahead: int = 3, hours_long: int = 8) -> dict:
+    """A night window that opens a few hours from now, so a test doesn't depend on the time of day."""
+    from datetime import datetime, timedelta
+    start = datetime.now() + timedelta(hours=hours_ahead)
+    end = start + timedelta(hours=hours_long)
+    return {"start": start.strftime("%H:%M"), "end": end.strftime("%H:%M")}

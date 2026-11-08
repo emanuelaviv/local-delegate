@@ -7,7 +7,7 @@ import time
 import unittest
 from pathlib import Path
 
-from helpers import GRADLE_LOG, PYTEST_LOG, SAMPLE_REPORT, Env, fake_profile, set_config
+from helpers import GRADLE_LOG, PYTEST_LOG, SAMPLE_REPORT, Env, fake_profile, future_night_window, set_config
 from local_delegate import calibrate, config, logbook, server
 
 
@@ -229,6 +229,7 @@ class E2E(unittest.TestCase):
     def test_low_memory_now_still_offers_tonight(self):
         import local_delegate.sysinfo as si
         p = self.env.write("report.md", big_report())
+        set_config(self.env, night_window=future_night_window())   # tonight's window is hours away
         si.memory = lambda: {"total": 34e9, "available": 6e9}   # e.g. Android emulator + Studio open
         est = self.svc.local_estimate("digest", {"paths": [str(p)]})
         why = {x["id"]: x["why"] for x in est["not_possible"]}
