@@ -21,12 +21,12 @@ These keep the plugin safe; pull requests that break them can't be merged.
 ```powershell
 git clone https://github.com/emanuelaviv/local-delegate.git
 cd local-delegate
-py -3 -m unittest discover -s tests
+python -m unittest discover -s tests
 ```
 
-On Linux or macOS, use `python3` instead of `py -3`. The tests use a simulated Ollama
+On Linux or macOS, use `python3` instead of `python`. The tests use a simulated Ollama
 (`tests/fake_ollama.py`), so they need no model and take about a minute.
-`py -3 tests/scenarios.py` prints which option each preset recommends on three kinds of hardware.
+`python tests/scenarios.py` prints which option each preset recommends on three kinds of hardware.
 
 To try your copy in Claude Code without installing it, run `claude --plugin-dir .` from the
 repository folder. To check the plugin's files, run `claude plugin validate --strict .`.
@@ -52,8 +52,8 @@ repository folder. To check the plugin's files, run `claude plugin validate --st
 
 ## Help wanted
 
-- **Linux and macOS.** The plugin starts the connector with `py`, which is Windows-only, and some
-  system checks are Windows-only. The tests already run on Linux.
+- **Linux and macOS.** The plugin starts the connector with `python`, which Linux and macOS usually
+  call `python3`, and some system checks are Windows-only. The tests already run on Linux.
 - **Other models.** Reasoning-level mapping and calibration checks for models other than Qwen 3.8.
 - **Windows CI.** A Windows job in `.github/workflows/tests.yml`; the current one runs on Ubuntu.
 - **A faster second model** for the fast level (see "Extending" in [docs/DESIGN.md](docs/DESIGN.md)).

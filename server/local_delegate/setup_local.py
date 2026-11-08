@@ -83,6 +83,9 @@ def restart_ollama(cfg: dict[str, Any], env_updates: dict[str, str]) -> str:
             exe = shutil.which("ollama")
             if not exe:
                 return "could not find Ollama to start it; start it from the Start menu"
+            # Ollama runs on this computer and gets the user's own environment, as when started from
+            # the Start menu: that's where Ollama's settings live, such as where the models are
+            # stored. It goes only to the Ollama process started here.
             env = dict(os.environ)
             for k in ("OLLAMA_NO_CLOUD", "OLLAMA_MAX_LOADED_MODELS", "OLLAMA_HOST", "OLLAMA_CONTEXT_LENGTH"):
                 v = sysinfo.user_env(k)

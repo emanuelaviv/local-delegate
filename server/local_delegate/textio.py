@@ -81,7 +81,7 @@ def _pdf_text(path: Path) -> str:
                               creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
         if proc.returncode == 0:
             return decode_bytes(proc.stdout)
-    raise ReadError(f"{path.name}: reading PDFs locally needs 'pypdf' (py -3 -m pip install pypdf) "
+    raise ReadError(f"{path.name}: reading PDFs locally needs 'pypdf' (python -m pip install pypdf) "
                     "or pdftotext; scanned PDFs need OCR first")
 
 

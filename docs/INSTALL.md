@@ -22,18 +22,23 @@ A terminal is any PowerShell or Command Prompt window: press **Win**, type `Powe
 ## Step 1: Python
 
 The connector is written in Python, using only its standard library, so there is nothing else to
-install.
+install. Claude starts it with the `python` command, so that command has to work in a terminal.
 
-1. Install Python 3.11 or newer from [python.org/downloads](https://www.python.org/downloads/). The
-   Windows installers from python.org include the `py` command the connector uses.
+1. Install Python 3.11 or newer from [python.org/downloads](https://www.python.org/downloads/):
+   - **Python install manager** (what python.org recommends for Windows): install it. The first
+     `python` command, in the next step, then installs the latest Python. If it asks whether to
+     add a folder to PATH, either answer works for Local Delegate.
+   - **Traditional installer** (`python-3.x.y-amd64.exe`): on its first screen, tick
+     **Add python.exe to PATH**, then choose **Install Now**.
 2. Open a **new** terminal and run:
 
    ```powershell
-   py -3 --version
+   python --version
    ```
 
-**Check:** it prints `Python 3.11` or higher. If Windows says `py` is not recognized (common with
-the Microsoft Store version of Python), install from python.org instead and open a new terminal.
+**Check:** it prints `Python 3.11` or higher. If it opens the Microsoft Store or says
+*Python was not found*, Windows' shortcut to the Store answered instead of a real Python: see
+[Troubleshooting](#troubleshooting).
 
 ## Step 2: Ollama
 
@@ -160,8 +165,9 @@ first.
 
 | What you see | What to do |
 |---|---|
-| Claude doesn't see the local tools | Use Claude Code or a Cowork session on this computer, not plain chat. Check that the plugin is enabled and that `py -3 --version` works, then restart the app. |
-| `py` is not recognized | Install Python from python.org (step 1) and open a new terminal. |
+| Claude doesn't see the local tools | Use Claude Code or a Cowork session on this computer, not plain chat. Check that the plugin is enabled and that `python --version` shows 3.11 or newer in a new terminal, then restart the app. |
+| `python` opens the Microsoft Store, says *Python was not found*, or isn't recognized | Python isn't on PATH, so Windows' shortcut to the Store answers. Install the Python install manager (step 1), or run the traditional installer again, choose **Modify**, and tick **Add Python to environment variables** under **Advanced Options**. Then open a new terminal. |
+| `python --version` shows a version older than 3.11 | Another Python comes first on PATH. Uninstall it in **Settings > Apps**, or put the newer one first in PATH, then open a new terminal. |
 | `ready: false` with a `cloud_disabled_now` problem | Run the setup again, or quit Ollama from the tray and start it from the Start menu. The check reads `%LOCALAPPDATA%\Ollama\server.log` for the line `Ollama cloud disabled: true`. An older Ollama version may not support this; update it. |
 | `listen_loopback_only` fails | Something set `OLLAMA_HOST` to expose Ollama to the network. The setup resets it; remove any manual setting that puts it back. |
 | `model_is_local` fails | The model isn't downloaded or the name differs: run `ollama list`. Models ending in `:cloud` are refused. |

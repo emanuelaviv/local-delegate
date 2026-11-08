@@ -24,7 +24,7 @@ names and paths you don't want public. Security problems: please report them pri
 **Your setup**
 
 - Windows version:
-- Python version (`py -3 --version`):
+- Python version (`python --version`):
 - Ollama version (`ollama --version`):
 - Model:
 - Claude Code or Cowork:

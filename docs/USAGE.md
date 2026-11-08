@@ -136,13 +136,13 @@ Most settings are easier to change by asking Claude. They live in
 From the `server` folder of a copy of this repository (the data folder is shared with the plugin):
 
 ```powershell
-py -3 ld.py status
-py -3 ld.py estimate test_log_triage "{\"paths\": [\"C:/projects/app/build.log\"]}"
-py -3 ld.py run digest "{\"paths\": [\"C:/projects/report.md\"]}" --approve --mode deep --when tonight
-py -3 ld.py jobs
-py -3 ld.py priority saver --until 18:00
-py -3 ld.py worker-check
-py -3 ld.py log
+python ld.py status
+python ld.py estimate test_log_triage "{\"paths\": [\"C:/projects/app/build.log\"]}"
+python ld.py run digest "{\"paths\": [\"C:/projects/report.md\"]}" --approve --mode deep --when tonight
+python ld.py jobs
+python ld.py priority saver --until 18:00
+python ld.py worker-check
+python ld.py log
 ```
 
 `--approve` is the yes that Claude otherwise asks you for.
@@ -158,8 +158,8 @@ folder somewhere stable, such as `C:\tools\local-delegate\server`, then:
 
   ```toml
   [mcp_servers.local-delegate]
-  command = "py"
-  args = ["-3", "-E", "-X", "utf8", "C:\\tools\\local-delegate\\server\\ld.py", "serve"]
+  command = "python"
+  args = ["C:\\tools\\local-delegate\\server\\ld.py", "serve"]
   tool_timeout_sec = 90
   default_tools_approval_mode = "writes"
   ```
@@ -169,8 +169,8 @@ folder somewhere stable, such as `C:\tools\local-delegate\server`, then:
 - **Cursor**, in `%USERPROFILE%\.cursor\mcp.json`:
 
   ```json
-  {"mcpServers": {"local-delegate": {"command": "py",
-    "args": ["-3", "-E", "-X", "utf8", "C:\\tools\\local-delegate\\server\\ld.py", "serve"]}}}
+  {"mcpServers": {"local-delegate": {"command": "python",
+    "args": ["C:\\tools\\local-delegate\\server\\ld.py", "serve"]}}}
   ```
 
 Other tools don't get the skill, so ask for local runs explicitly there.

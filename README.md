@@ -14,7 +14,7 @@ routine work to an [Ollama](https://ollama.com) model on your computer: digestin
 logs, triaging failed test runs, summarizing letters and forms, sorting job postings, translating,
 and first drafts from your notes.
 
-Version 0.4.0. It runs on Windows 11 only for now, and it is field-tested on one Windows 11
+Version 0.4.1. It runs on Windows 11 only for now, and it is field-tested on one Windows 11
 computer.
 
 ## Why
@@ -102,7 +102,7 @@ The full policy: [docs/PRIVACY.md](https://github.com/emanuelaviv/local-delegate
 |---|---|---|
 | Computer | Windows 11 (Windows 10 is untested) | Windows 11 |
 | Memory | 32 GB for the default 27B model, which takes about 18 GB; less with a smaller model | 32 GB, RTX 5060 8 GB |
-| Python | 3.11 or newer, with the `py` launcher | 3.11 to 3.14 (tests), 3.14 (in use) |
+| Python | 3.11 or newer, as the `python` command | 3.11 to 3.14 (tests), 3.14 (in use) |
 | Ollama | 0.34.4 or newer, able to turn cloud features off | 0.40.8 |
 | Claude | Claude Code, or a Cowork session in the Claude desktop app on the same computer (plain chat can't start a local connector) | both |
 
@@ -111,8 +111,9 @@ The full policy: [docs/PRIVACY.md](https://github.com/emanuelaviv/local-delegate
 The full walkthrough, with a check after every step and fixes for common problems, is in
 **[docs/INSTALL.md](docs/INSTALL.md)**. In short:
 
-1. **Python.** Install Python 3.11 or newer from [python.org](https://www.python.org/downloads/),
-   then check that `py -3 --version` works in a terminal.
+1. **Python.** Install Python 3.11 or newer from [python.org](https://www.python.org/downloads/)
+   (with the traditional installer, tick **Add python.exe to PATH**), then check that
+   `python --version` works in a new terminal.
 2. **Ollama and a model.** Install [Ollama](https://ollama.com/download), then run
    `ollama pull qwen3.8:27b-q4_K_M` (about 17 GB; INSTALL covers smaller computers).
 3. **The plugin.**
@@ -151,12 +152,13 @@ example *"Triage the failures in examples/sample-pytest-log.txt with the local m
 
 ## What it runs, reads and sends
 
-- **Runs** a Python connector (started by Claude) and a background worker. If Windows won't let
+- **Runs** a Python connector (Claude starts it with `python`) and a background worker. If Windows won't let
   the worker start directly, it's started through Windows' process service (WMI). For its checks
   it runs read-only system queries: PowerShell inline commands with `-ExecutionPolicy Bypass`
   (which program listens on Ollama's port, the graphics card's name), `nvidia-smi`, `netstat`,
   `tasklist` and registry reads. Diff tasks run read-only `git` commands. Only during setup, after
-  you approve, it changes Ollama's settings and restarts Ollama. While jobs are pending on mains
+  you approve, it changes Ollama's settings and restarts Ollama, which gets your
+  user environment as when you start it from the Start menu. While jobs are pending on mains
   power, it asks Windows not to sleep.
 - **Reads** files you or Claude name, inside the allowed folders (your user folder by default),
   and never secret stores.

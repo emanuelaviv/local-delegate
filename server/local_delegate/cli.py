@@ -1,4 +1,4 @@
-"""Command line: `py -3 ld.py <command>`.
+"""Command line: `python ld.py <command>`.
 
   serve                      run the MCP server on stdio (what Claude, Cursor or Codex start)
   status                     local-only checks, RAM, calibration

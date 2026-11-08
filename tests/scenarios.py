@@ -1,6 +1,6 @@
 """What the router recommends for typical jobs, per priority preset, on three kinds of hardware.
 
-Run: py -3 tests/scenarios.py   (synthetic calibration profiles; no model runs)
+Run: python tests/scenarios.py   (synthetic calibration profiles; no model runs)
 """
 
 import random

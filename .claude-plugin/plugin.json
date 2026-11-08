@@ -1,7 +1,7 @@
 {
   "name": "local-delegate",
   "displayName": "Local Delegate",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Hand routine reading, extraction and first drafts to a local Ollama model on your own Windows computer. Strictly local (checked before every run), calibrated to your hardware, and every run is offered as options (Claude now, or the local model at fast, careful or deep reasoning, now or overnight) with ready time, tokens saved and redo risk. Nothing runs until you pick one.",
   "author": {
     "name": "Aviv Emanuel"

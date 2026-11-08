@@ -33,9 +33,9 @@ could take over; the design decisions, and the reasons for them, come first.
    restarts on updates, and each poll is a full Claude step. So the connector only writes job files;
    a detached worker process (`ld.py worker`, started outside Claude's process tree) runs them, and
    a call waits at most ~45 s. The skill tells Claude to keep working and check once, or schedule a
-   single wake-up. The connector itself usually sits in job objects that end it with the app: the
-   `py` launcher puts python.exe in a kill-on-close job (with silent breakaway), and Node-based apps
-   do the same to the processes they start (libuv). So the worker is started through a short-lived
+   single wake-up. The connector itself usually sits in job objects that end it with the app: Node-based
+   apps put the processes they start in a kill-on-close job (libuv), and the `py` launcher, where a
+   configuration uses it, does the same to python.exe (with silent breakaway). So the worker is started through a short-lived
    launcher that asks to leave the job (ignored when there is none; refused when the job forbids it,
    then a plain start when the job lets children go silently, then WMI, then an ordinary child as a
    last resort).
@@ -223,6 +223,9 @@ decisions never go to the model; the skill allows at most a two-line summary.
 - Field-tested on one Windows 11 computer (2026-10-22, v0.2.1): the worker starts with `how: breakaway` and
   reports no job object (`outlives_claude: true`); the connector sits in the `py` launcher's job
   (kill on close, silent breakaway, no explicit breakaway flag, which Windows accepted anyway).
+  Since 0.4.1 the plugin starts the connector with `python` directly (Claude's plugin directory
+  wants `node`, `python`, `python3`, `bash` or `sh` there), so it sits in the app's job instead;
+  that start still needs the same field check (*"check the worker"*).
   Still to see on a real night: that keep-awake holds, and the real reasoning lengths per level
   (the log shows them).
 - A faster second model for the fast level: on this machine (8 GB GPU, 32 GB RAM) a mixture-of-experts

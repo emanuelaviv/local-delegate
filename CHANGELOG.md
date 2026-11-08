@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.1 (2026-11-08): starts with plain `python`
+
+- Claude starts the connector with `python` and the plugin's `server/ld.py`, as Claude's plugin
+  directory asks, instead of the `py` launcher with options. Python has to be on PATH as `python`:
+  the Python install manager does this, and the traditional installer does it when you tick
+  **Add python.exe to PATH** (docs/INSTALL.md, step 1).
+- `ld.py` now does what the launcher options did: it ignores folders added through `PYTHONPATH`,
+  and writes its output as UTF-8 whatever Windows' code page is (files were already read and
+  written as UTF-8). A Python older than 3.11 gets a clear message instead of an error.
+- Tests start the connector the way Claude does, including with a decoy module on `PYTHONPATH`
+  and without Python's UTF-8 mode.
+- Terminal commands and the Codex and Cursor examples use `python`.
+
 ## 0.4.0 (2026-11-07): ready for Claude's plugin directory
 
 - `local_admin` is now marked as able to make destructive changes: it can change Ollama's settings,
