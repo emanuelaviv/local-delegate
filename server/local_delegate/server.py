@@ -529,7 +529,7 @@ TOOLS: list[dict[str, Any]] = [
          "budget_minutes": {"type": "number"}, "context_length": {"type": "integer"},
          "path": {"type": "string"}, "job_id": {"type": "string"}, "model": {"type": "string"},
          "days": {"type": "number"}}},
-     "annotations": {"title": "Local model admin", "readOnlyHint": False, "destructiveHint": False, "openWorldHint": False}},
+     "annotations": {"title": "Local model admin", "readOnlyHint": False, "destructiveHint": True, "openWorldHint": False}},
 ]
 
 

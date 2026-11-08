@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.4.0 (2026-11-07): ready for Claude's plugin directory
+
+- `local_admin` is now marked as able to make destructive changes: it can change Ollama's settings,
+  restart Ollama and cancel jobs. Claude's apps may ask you before using it.
+- README: a privacy policy section, example prompts, and fictional sample files to try it with
+  (`examples/`).
+- Privacy page: sharing with third parties (none) and how to reach the author.
+- The skill names where the connector runs: Claude Code or a Cowork session on your Windows
+  computer, not chat on the web or in the mobile apps.
+- Python 3.11 or newer, since 3.9 and 3.10 are past end of life. Tests run on 3.11 to 3.14.
+
 ## 0.3.0 (2026-10-24): first public release
 
 - Instructions and tool texts written for any user, with neutral examples and test fixtures.

@@ -17,7 +17,7 @@ and you'll be credited if you'd like.
 
 | Version | Supported |
 |---|---|
-| 0.3.x | Yes |
+| 0.4.x | Yes |
 | Older | No; please update |
 
 ## What counts as a security problem

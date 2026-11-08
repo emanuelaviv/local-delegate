@@ -1,0 +1,45 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.9, pytest-8.4.2, pluggy-1.6.0
+rootdir: C:\Users\you\projects\harbor-notes
+collected 44 items
+
+tests\test_export.py ........F...                                        [ 27%]
+tests\test_search.py .........                                           [ 47%]
+tests\test_sync.py ......E.F..                                           [ 72%]
+tests\test_tags.py ............                                          [100%]
+
+=================================== ERRORS ====================================
+______________________ ERROR at setup of test_sync_retry ______________________
+
+    @pytest.fixture
+    def server():
+>       return FakeServer(port=0, timeout=0.5)
+E       TypeError: FakeServer.__init__() got an unexpected keyword argument 'timeout'
+
+tests\conftest.py:18: TypeError
+=================================== FAILURES ==================================
+_________________________ test_export_markdown_dates __________________________
+
+    def test_export_markdown_dates():
+        note = Note(title="Trip", created=datetime(2026, 3, 1, 9, 30))
+>       assert export_markdown(note).splitlines()[1] == "Created: 2026-03-01 09:30"
+E       AssertionError: assert 'Created: 2026-03-01' == 'Created: 2026-03-01 09:30'
+E         - Created: 2026-03-01 09:30
+E         + Created: 2026-03-01
+
+tests\test_export.py:42: AssertionError
+________________________ test_sync_conflict_keeps_both ________________________
+
+    def test_sync_conflict_keeps_both(tmp_path):
+        local, remote = make_conflict(tmp_path)
+        merged = sync(local, remote)
+>       assert len(merged) == 2
+E       assert 1 == 2
+E        +  where 1 = len([Note(title='Groceries', ...)])
+
+tests\test_sync.py:77: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_export.py::test_export_markdown_dates - AssertionError: assert 'Created: 2026-03-01' == 'Created: 2026-03-01 09:30'
+FAILED tests/test_sync.py::test_sync_conflict_keeps_both - assert 1 == 2
+ERROR tests/test_sync.py::test_sync_retry - TypeError: FakeServer.__init__() got an unexpected keyword argument 'timeout'
+=================== 2 failed, 41 passed, 1 error in 3.21s ====================

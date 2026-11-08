@@ -9,12 +9,12 @@ permissions:
 
 jobs:
   test:
-    # Pinned to Ubuntu 24.04: ubuntu-latest is now 26.04, which has no Python 3.9
+    # Pinned to Ubuntu 24.04, so the test machine changes only when this file does
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        python: ["3.9", "3.11", "3.13", "3.14"]
+        python: ["3.11", "3.12", "3.13", "3.14"]
     steps:
       - uses: actions/checkout@v7
         with:

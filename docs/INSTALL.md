@@ -24,7 +24,7 @@ A terminal is any PowerShell or Command Prompt window: press **Win**, type `Powe
 The connector is written in Python, using only its standard library, so there is nothing else to
 install.
 
-1. Install Python 3.9 or newer from [python.org/downloads](https://www.python.org/downloads/). The
+1. Install Python 3.11 or newer from [python.org/downloads](https://www.python.org/downloads/). The
    Windows installers from python.org include the `py` command the connector uses.
 2. Open a **new** terminal and run:
 
@@ -32,7 +32,7 @@ install.
    py -3 --version
    ```
 
-**Check:** it prints `Python 3.9` or higher. If Windows says `py` is not recognized (common with
+**Check:** it prints `Python 3.11` or higher. If Windows says `py` is not recognized (common with
 the Microsoft Store version of Python), install from python.org instead and open a new terminal.
 
 ## Step 2: Ollama

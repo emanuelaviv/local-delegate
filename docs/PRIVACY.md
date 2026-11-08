@@ -1,5 +1,11 @@
 # Privacy: what stays local, what reaches Claude
 
+This is Local Delegate's privacy policy. Last updated: 7 November 2026.
+
+**In short:** the author collects nothing. There is no account, telemetry, analytics or crash
+reporting, and nothing is sent anywhere except to Ollama on your own computer and, as tool results,
+to your Claude conversation.
+
 The local model's work happens on your computer. What a tool returns to Claude becomes part of your
 conversation, like anything else you share with Claude. This page lists exactly what goes where.
 
@@ -93,3 +99,17 @@ Ollama settings.
 
 The only network connection is HTTP to Ollama on `127.0.0.1`. Any other address is refused, proxy
 settings are ignored, and there is no telemetry, no update check and no download.
+
+## Sharing with third parties
+
+Nothing is sent to the author or to any other service. Prompts go only to Ollama on your computer,
+which you install and control; setup turns its cloud features off. What a tool returns becomes part
+of your Claude conversation, which Anthropic handles under its own privacy policy.
+
+## Contact
+
+Questions about this policy: open an issue at
+[github.com/emanuelaviv/local-delegate/issues](https://github.com/emanuelaviv/local-delegate/issues). Security or
+privacy problems: report them privately, as [SECURITY.md](../SECURITY.md) describes.
+
+Changes to this policy are listed in [CHANGELOG.md](../CHANGELOG.md).

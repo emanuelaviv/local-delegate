@@ -4,7 +4,7 @@
 strictly local, sized to your hardware, and only with your OK.**
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-blue)
-![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue)
+![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue)
 ![Dependencies: none](https://img.shields.io/badge/dependencies-none-brightgreen)
 ![Platform: Windows 11](https://img.shields.io/badge/platform-Windows%2011-informational)
 
@@ -14,7 +14,8 @@ routine work to an [Ollama](https://ollama.com) model on your computer: digestin
 logs, triaging failed test runs, summarizing letters and forms, sorting job postings, translating,
 and first drafts from your notes.
 
-Version 0.3.0 is the first public release. It is field-tested on one Windows 11 computer.
+Version 0.4.0. It runs on Windows 11 only for now, and it is field-tested on one Windows 11
+computer.
 
 ## Why
 
@@ -76,13 +77,32 @@ What does reach Claude is whatever a tool returns (a digest, a checklist, a draf
 part of your conversation. Full details are in [docs/PRIVACY.md](docs/PRIVACY.md) and
 [SECURITY.md](SECURITY.md).
 
+## Privacy policy
+
+Local Delegate's author collects nothing: there is no account, telemetry, analytics or crash
+reporting.
+
+- **What it reads:** only the files you or Claude name, inside the allowed folders on your
+  computer (your user folder by default), and never secret stores.
+- **How it's used and stored:** files are read and processed on your computer. Settings,
+  calibration, jobs, results and logs stay in `%LOCALAPPDATA%\local-delegate`.
+- **Sharing:** prompts go only to Ollama at `127.0.0.1`. What a tool returns becomes part of your
+  Claude conversation, which Anthropic handles under its own policies. Nothing goes to the author
+  or to any other service.
+- **Retention:** jobs and file-only results are deleted after 14 days (the `retention_days`
+  setting). Settings, rule sheets and the metadata-only log stay until you delete them.
+- **Contact:** questions in this repository's Issues tab; security or privacy problems privately,
+  as [SECURITY.md](SECURITY.md) describes.
+
+The full policy: [docs/PRIVACY.md](https://github.com/emanuelaviv/local-delegate/blob/main/docs/PRIVACY.md).
+
 ## Requirements
 
 | | Needed | Tested |
 |---|---|---|
 | Computer | Windows 11 (Windows 10 is untested) | Windows 11 |
 | Memory | 32 GB for the default 27B model, which takes about 18 GB; less with a smaller model | 32 GB, RTX 5060 8 GB |
-| Python | 3.9 or newer, with the `py` launcher | 3.9 to 3.14 (tests), 3.14 (in use) |
+| Python | 3.11 or newer, with the `py` launcher | 3.11 to 3.14 (tests), 3.14 (in use) |
 | Ollama | 0.34.4 or newer, able to turn cloud features off | 0.40.8 |
 | Claude | Claude Code, or a Cowork session in the Claude desktop app on the same computer (plain chat can't start a local connector) | both |
 
@@ -91,7 +111,7 @@ part of your conversation. Full details are in [docs/PRIVACY.md](docs/PRIVACY.md
 The full walkthrough, with a check after every step and fixes for common problems, is in
 **[docs/INSTALL.md](docs/INSTALL.md)**. In short:
 
-1. **Python.** Install Python 3.9 or newer from [python.org](https://www.python.org/downloads/),
+1. **Python.** Install Python 3.11 or newer from [python.org](https://www.python.org/downloads/),
    then check that `py -3 --version` works in a terminal.
 2. **Ollama and a model.** Install [Ollama](https://ollama.com/download), then run
    `ollama pull qwen3.8:27b-q4_K_M` (about 17 GB; INSTALL covers smaller computers).
@@ -117,12 +137,27 @@ Work as usual: Claude offers the local model when a task fits. To be explicit, s
 The 13 tasks, the options, presets, overnight runs, rule sheets, settings, the command line, and
 use from Codex or Cursor are in **[docs/USAGE.md](docs/USAGE.md)**.
 
+## Example prompts
+
+- *"Digest `C:\Users\you\Documents\q3-report.md` with the local model: decisions, risks and dates."*
+- *"The tests failed. Triage `build\test-output.log` locally and tell me what broke first."*
+- *"Summarize `letters\water-notice.txt` on my computer: what do I need to do, and by when? Keep
+  the result local."*
+- *"Compare these five job postings with my CV tonight; I'll read the checklists in the morning."*
+- *"Save tokens today: do anything long locally."*
+
+To try it without your own files, use the fictional samples in [examples/](examples/), for
+example *"Triage the failures in examples/sample-pytest-log.txt with the local model."*
+
 ## What it runs, reads and sends
 
-- **Runs** a Python connector (started by Claude) and a background worker. For its checks it runs
-  read-only system queries: PowerShell (which program listens on Ollama's port, the graphics card's
-  name), `nvidia-smi`, `netstat`, `tasklist` and registry reads. Diff tasks run read-only `git`
-  commands. Only during setup, after you approve, it changes Ollama's settings and restarts Ollama.
+- **Runs** a Python connector (started by Claude) and a background worker. If Windows won't let
+  the worker start directly, it's started through Windows' process service (WMI). For its checks
+  it runs read-only system queries: PowerShell inline commands with `-ExecutionPolicy Bypass`
+  (which program listens on Ollama's port, the graphics card's name), `nvidia-smi`, `netstat`,
+  `tasklist` and registry reads. Diff tasks run read-only `git` commands. Only during setup, after
+  you approve, it changes Ollama's settings and restarts Ollama. While jobs are pending on mains
+  power, it asks Windows not to sleep.
 - **Reads** files you or Claude name, inside the allowed folders (your user folder by default),
   and never secret stores.
 - **Writes** only in `%LOCALAPPDATA%\local-delegate`, plus Ollama's settings during the setup you

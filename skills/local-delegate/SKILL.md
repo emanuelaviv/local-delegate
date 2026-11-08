@@ -13,7 +13,8 @@ model can reason long and carefully.
 
 Find the tools with ToolSearch (query `local_estimate`) if they are not loaded; their names may
 carry a prefix. If they are missing, work as usual and say once that the local connector isn't
-connected (it runs in Claude Code or in a Cowork session on the user's computer, not in plain chat).
+connected (it runs only in Claude Code or a Cowork session on the user's Windows computer, not in
+chat on the web or in the mobile apps).
 
 ## When to reach for it
 
